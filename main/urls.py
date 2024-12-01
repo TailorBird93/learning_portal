@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='main/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('add-tutorial/', views.add_tutorial, name='add_tutorial'),
+    path('tutorial/<int:pk>/', views.tutorial_detail, name='tutorial_detail'),
 ]

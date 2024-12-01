@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -29,3 +29,7 @@ def add_tutorial(request):
     else:
         form = TutorialForm()
     return render(request, 'main/add_tutorial.html', {'form': form})
+
+def tutorial_detail(request, pk):
+    tutorial = get_object_or_404(Tutorial, pk=pk)
+    return render(request, 'main/tutorial_detail.html', {'tutorial': tutorial})
