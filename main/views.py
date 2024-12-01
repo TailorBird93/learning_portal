@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import TutorialForm, Tutorial
 import stripe
@@ -12,8 +13,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def home(request):
-    tutorials = Tutorial.objects.all()
-    return render(request, 'main/home.html', {'tutorials': tutorials})
+    all_tutorials = Tutorial.objects.all()
+    purchased_tutorials = Tutorial.objects.filter(purchased=True)
+    return render(request, 'main/home.html', {
+        'all_tutorials': all_tutorials,
+        'purchased_tutorials': purchased_tutorials,
+    })
+
 
 def register(request):
     if request.method == 'POST':
@@ -28,14 +34,21 @@ def register(request):
 
 @login_required
 def add_tutorial(request):
+    if not request.user.is_staff:
+        messages.error(request, "You do not have permission to add tutorials.")
+        return redirect('home')
+
     if request.method == 'POST':
         form = TutorialForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Tutorial added successfully!")
             return redirect('home')
     else:
         form = TutorialForm()
+
     return render(request, 'main/add_tutorial.html', {'form': form})
+
 
 def tutorial_detail(request, pk):
     tutorial = get_object_or_404(Tutorial, pk=pk)

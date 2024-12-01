@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>Payment Successful</h1>
-    <p>Thank you for your purchase! You now have access to the tutorial.</p>
+    <p>Thank you for your purchase! You can now view your tutorial:</p>
+    <a href="{% url 'tutorial_detail' tutorial.pk %}">{{ tutorial.title }}</a>
     <a href="{% url 'home' %}">Back to Home</a>
 {% endblock %}

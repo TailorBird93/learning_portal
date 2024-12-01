@@ -1,18 +1,34 @@
 {% extends 'main/base.html' %}
+{% load custom_filters %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
     <h1>Welcome to the Learning Portal</h1>
-    <h2>Available Tutorials</h2>
+
+    <h2>Your Purchased Tutorials</h2>
     <ul>
-        {% for tutorial in tutorials %}
+        {% for tutorial in purchased_tutorials %}
             <li>
                 <a href="{% url 'tutorial_detail' tutorial.pk %}">
                     <strong>{{ tutorial.title }}</strong>
-                </a> - ${{ tutorial.price|floatformat:2 }}
-                <p>{{ tutorial.description }}</p>
+                </a>
             </li>
+        {% empty %}
+            <li>You haven't purchased any tutorials yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>All Tutorials</h2>
+    <ul>
+        {% for tutorial in all_tutorials %}
+            <li>
+                <a href="{% url 'tutorial_detail' tutorial.pk %}">
+                    <strong>{{ tutorial.title }}</strong>
+                </a> - {{ tutorial.price|currency }}
+            </li>
+        {% empty %}
+            <li>No tutorials available yet. Check back later!</li>
         {% endfor %}
     </ul>
 {% endblock %}
