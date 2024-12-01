@@ -9,5 +9,13 @@
     <p>{{ tutorial.description }}</p>
     <h2>Content</h2>
     <p>{{ tutorial.content }}</p>
+
+    {% if not tutorial.purchased %}
+        <form action="{% url 'checkout' tutorial.pk %}" method="get">
+            <button type="submit">Buy for ${{ tutorial.price|floatformat:2 }}</button>
+        </form>
+    {% else %}
+        <p>You have already purchased this tutorial.</p>
+    {% endif %}
     <a href="{% url 'home' %}">Back to Tutorials</a>
 {% endblock %}

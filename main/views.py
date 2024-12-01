@@ -3,6 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import TutorialForm, Tutorial
+import stripe
+from django.conf import settings
+
+#TEMPORARY KEY
+stripe.api_key = settings.STRIPE_SECRET_KEY
+#CHANGE LATER
+
 
 def home(request):
     tutorials = Tutorial.objects.all()
@@ -33,3 +40,32 @@ def add_tutorial(request):
 def tutorial_detail(request, pk):
     tutorial = get_object_or_404(Tutorial, pk=pk)
     return render(request, 'main/tutorial_detail.html', {'tutorial': tutorial})
+
+def checkout(request, pk):
+    tutorial = get_object_or_404(Tutorial, pk=pk)
+    if tutorial.purchased:
+        return redirect('tutorial_detail', pk=pk)
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {
+                    'name': tutorial.title,
+                },
+                'unit_amount': int(tutorial.price * 100),
+            },
+            'quantity': 1,
+        }],
+        mode='payment',
+        success_url=request.build_absolute_uri('/success/'),
+        cancel_url=request.build_absolute_uri('/cancel/'),
+    )
+    return redirect(session.url, code=303)
+
+def success(request):
+    return render(request, 'main/success.html')
+
+def cancel(request):
+    return render(request, 'main/cancel.html')

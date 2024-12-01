@@ -17,7 +17,9 @@ class Tutorial(models.Model):
     content = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+    purchased = models.BooleanField(default=False)  # New field
 
     def __str__(self):
         return self.title
+
 
