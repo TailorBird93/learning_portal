@@ -4,4 +4,4 @@ register = template.Library()
 
 @register.filter
 def currency(value):
-    return "${:,.2f}".format(value)
+    return "£{:,.2f}".format(value)
