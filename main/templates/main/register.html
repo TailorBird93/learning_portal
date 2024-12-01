@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
     <h1>Register</h1>
     <form method="post">
         {% csrf_token %}
@@ -13,5 +10,4 @@
         <button type="submit">Register</button>
     </form>
     <a href="{% url 'login' %}">Already have an account? Login here.</a>
-</body>
-</html>
+{% endblock %}
