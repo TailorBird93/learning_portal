@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1 class="mt-3">Your Dashboard</h1>
+    <h2 class="mt-4">Purchased Tutorials</h2>
+    <ul class="list-group">
+        {% for tutorial in purchased_tutorials %}
+            <li class="list-group-item">
+                <a href="{% url 'tutorial_detail' tutorial.pk %}">
+                    <strong>{{ tutorial.title }}</strong>
+                </a>
+            </li>
+        {% empty %}
+            <li class="list-group-item">You haven't purchased any tutorials yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+{% endblock %}

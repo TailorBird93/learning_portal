@@ -87,3 +87,9 @@ def success(request, pk):
 
 def cancel(request):
     return render(request, 'main/cancel.html')
+
+
+@login_required
+def dashboard(request):
+    purchased_tutorials = Tutorial.objects.filter(purchased=True)
+    return render(request, 'main/dashboard.html', {'purchased_tutorials': purchased_tutorials})

@@ -12,5 +12,6 @@ urlpatterns = [
     path('tutorial/<int:pk>/checkout/', views.checkout, name='checkout'),
     path('success/<int:pk>/', views.success, name='success'),
     path('cancel/', views.cancel, name='cancel'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]
 

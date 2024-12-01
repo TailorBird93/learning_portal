@@ -1,34 +1,38 @@
 {% extends 'main/base.html' %}
 {% load custom_filters %}
-
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to the Learning Portal</h1>
+    <h1 class="mt-3">Welcome to the Learning Portal</h1>
 
-    <h2>Your Purchased Tutorials</h2>
-    <ul>
+    <h2 class="mt-5">Your Purchased Tutorials</h2>
+    <ul class="list-group">
         {% for tutorial in purchased_tutorials %}
-            <li>
+            <li class="list-group-item">
                 <a href="{% url 'tutorial_detail' tutorial.pk %}">
                     <strong>{{ tutorial.title }}</strong>
                 </a>
             </li>
         {% empty %}
-            <li>You haven't purchased any tutorials yet.</li>
+            <li class="list-group-item">You haven't purchased any tutorials yet.</li>
         {% endfor %}
     </ul>
 
-    <h2>All Tutorials</h2>
-    <ul>
+    <h2 class="mt-5">All Tutorials</h2>
+    <div class="row">
         {% for tutorial in all_tutorials %}
-            <li>
-                <a href="{% url 'tutorial_detail' tutorial.pk %}">
-                    <strong>{{ tutorial.title }}</strong>
-                </a> - {{ tutorial.price|currency }}
-            </li>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tutorial.title }}</h5>
+                        <p class="card-text">{{ tutorial.description }}</p>
+                        <p class="text-muted">{{ tutorial.price|currency }}</p>
+                        <a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
         {% empty %}
-            <li>No tutorials available yet. Check back later!</li>
+            <p>No tutorials available yet. Check back later!</p>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
