@@ -4,4 +4,16 @@
 
 {% block content %}
     <h1>Welcome to the Learning Portal</h1>
+    <h2>Available Tutorials</h2>
+    <ul>
+        {% for tutorial in tutorials %}
+            <li>
+                <strong>{{ tutorial.title }}</strong> - ${{ tutorial.price|floatformat:2 }}
+
+                <p>{{ tutorial.description }}</p>
+            </li>
+        {% empty %}
+            <li>No tutorials available yet. Check back later!</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
