@@ -43,6 +43,7 @@ def tutorial_detail(request, pk):
 
 def checkout(request, pk):
     tutorial = get_object_or_404(Tutorial, pk=pk)
+
     if tutorial.purchased:
         return redirect('tutorial_detail', pk=pk)
 
@@ -59,13 +60,17 @@ def checkout(request, pk):
             'quantity': 1,
         }],
         mode='payment',
-        success_url=request.build_absolute_uri('/success/'),
+        success_url=request.build_absolute_uri(f'/success/{pk}/'),
         cancel_url=request.build_absolute_uri('/cancel/'),
     )
     return redirect(session.url, code=303)
 
-def success(request):
-    return render(request, 'main/success.html')
+def success(request, pk):
+    tutorial = get_object_or_404(Tutorial, pk=pk)
+    tutorial.purchased = True
+    tutorial.save()
+    return render(request, 'main/success.html', {'tutorial': tutorial})
+
 
 def cancel(request):
     return render(request, 'main/cancel.html')
