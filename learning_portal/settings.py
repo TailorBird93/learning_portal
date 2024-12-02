@@ -16,7 +16,13 @@ SECRET_KEY = 'django-insecure-6)(do9@8h_g*^+qu+=803jxv)caixfsi-0v7nnprm64u#cvhur
 DEBUG = True
 
 ALLOWED_HOSTS = []
+STATIC_URL = '/static/'
 
+#Django CSS lookup
+STATICFILES_DIRS = [
+    BASE_DIR / 'main' / 'static',
+]
+# Rridirect to home page after login
 LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'
