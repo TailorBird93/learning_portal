@@ -44,4 +44,12 @@ footer {
     white-space: pre-line; 
     overflow-wrap: break-word; /* Prevent long words from breaking layout */
 }
+.card-body h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card-body p {
+    font-size: 1.1rem;
+}
 
