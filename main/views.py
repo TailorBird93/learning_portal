@@ -26,8 +26,14 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def home(request):
     available_tutorials = Tutorial.objects.filter(purchased=False)
+    purchased_tutorials = []
+
+    if request.user.is_authenticated:
+        purchased_tutorials = Tutorial.objects.filter(purchased=True)
+
     return render(request, 'main/home.html', {
         'available_tutorials': available_tutorials,
+        'purchased_tutorials': purchased_tutorials,
     })
 
 

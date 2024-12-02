@@ -17,3 +17,13 @@ footer {
     padding: 20px;
     text-align: center;
 }
+
+.collapse:not(.show) #arrow svg {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.collapse.show #arrow svg {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
