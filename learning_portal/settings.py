@@ -1,9 +1,17 @@
 
 from pathlib import Path
 from decouple import config
+import os
+from decouple import config
+from dj_database_url import parse as db_url
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key')
@@ -11,11 +19,7 @@ STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-print(f"SECRET_KEY: {SECRET_KEY}")
-print(f"STRIPE_PUBLIC_KEY: {STRIPE_PUBLIC_KEY}")
-print(f"STRIPE_SECRET_KEY: {STRIPE_SECRET_KEY}")
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['learning-portal.herokuapp.com', '127.0.0.1']
 STATIC_URL = '/static/'
 
 #Django CSS lookup
@@ -73,14 +77,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'learning_portal.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': config(
+        'DATABASE_URL',
+        default=f'sqlite:///{os.path.join(BASE_DIR, "db.sqlite3")}',
+        cast=db_url
+    )
 }
 
 
