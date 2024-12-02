@@ -75,3 +75,18 @@ body::before {
     z-index: -1; 
 }
 
+/* Mobile screens */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+body {
+    padding: 0 15px;
+}
+
+footer {
+    padding: 15px;
+    text-align: center;
+}
+
