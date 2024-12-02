@@ -98,10 +98,12 @@ def success(request, pk):
     tutorial = get_object_or_404(Tutorial, pk=pk)
     tutorial.purchased = True
     tutorial.save()
+    messages.success(request, f"Thank you! You have successfully purchased {tutorial.title}.")
     return render(request, 'main/success.html', {'tutorial': tutorial})
 
 
 def cancel(request):
+    messages.error(request, "Your payment was canceled or failed. Please try again.")
     return render(request, 'main/cancel.html')
 
 
