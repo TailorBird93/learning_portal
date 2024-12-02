@@ -27,3 +27,16 @@ footer {
     transform: rotate(180deg);
     transition: transform 0.3s ease;
 }
+
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
