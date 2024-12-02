@@ -1,19 +1,19 @@
 
 from pathlib import Path
+from decouple import config
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# SECURITY WARNING: STRIPE TEST KEY
-# Stripe Settings
-STRIPE_PUBLIC_KEY = "pk_test_51QRKE8JzC6mC2mqAkfIaqjr3DJopQ4OqaY6DdlHaHMrwAmjIloc4OiHMe1YdAPWWwpiqfhzceF7y6TagNbjEN8ol00nYKEaFsl"
-STRIPE_SECRET_KEY = "sk_test_51QRKE8JzC6mC2mqA21Ayfby4EkIMGTA5Bqkbf1GEZL5LRqnqu6Uet7QOXaWQg7Y9BsLxh7kF2DDqgU6eKjV4E8Ep00ajatJhG7"
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6)(do9@8h_g*^+qu+=803jxv)caixfsi-0v7nnprm64u#cvhur'
+SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key')
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+print(f"SECRET_KEY: {SECRET_KEY}")
+print(f"STRIPE_PUBLIC_KEY: {STRIPE_PUBLIC_KEY}")
+print(f"STRIPE_SECRET_KEY: {STRIPE_SECRET_KEY}")
 
 ALLOWED_HOSTS = []
 STATIC_URL = '/static/'
