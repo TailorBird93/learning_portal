@@ -41,12 +41,14 @@
     <div class="row">
         {% for tutorial in available_tutorials %}
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
+                <div class="card h-100 shadow-sm d-flex flex-column">
+                    <div class="card-body flex-grow-1">
                         <h5 class="card-title">{{ tutorial.title }}</h5>
                         <p class="card-text text-muted">{{ tutorial.description|truncatewords:15 }}</p>
                         <p class="fw-bold">{{ tutorial.price|currency }}</p>
-                        <a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary">View Details</a>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0 mt-auto">
+                        <a href="{% url 'tutorial_detail' tutorial.pk %}" class="btn btn-primary w-100">View Details</a>
                     </div>
                 </div>
             </div>

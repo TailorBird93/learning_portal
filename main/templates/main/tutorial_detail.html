@@ -4,19 +4,23 @@
 {% block title %}{{ tutorial.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ tutorial.title }}</h1>
-    <p><strong>Price:</strong> {{ tutorial.price|currency }}</p>
-    <h2>Description</h2>
-    <p>{{ tutorial.description }}</p>
-
-    {% if tutorial.purchased %}
-        <h2>Content</h2>
-        <p>{{ tutorial.content }}</p>
-    {% else %}
-        <p>You need to purchase this tutorial to view the content.</p>
-        <form action="{% url 'checkout' tutorial.pk %}" method="get">
-            <button type="submit">Buy for {{ tutorial.price|currency }}</button>
-        </form>
-    {% endif %}
-    <a href="{% url 'home' %}">Back to Tutorials</a>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title">{{ tutorial.title }}</h1>
+            <p class="card-text text-muted">{{ tutorial.description }}</p>
+            <h5 class="fw-bold">Price: {{ tutorial.price|currency }}</h5>
+            {% if tutorial.purchased %}
+                <h2 class="mt-4">Content</h2>
+                <p>{{ tutorial.content }}</p>
+            {% else %}
+                <p class="text-danger">You need to purchase this tutorial to view the content.</p>
+                <form action="{% url 'checkout' tutorial.pk %}" method="get">
+                    <button type="submit" class="btn btn-primary">Buy for {{ tutorial.price|currency }}</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Back to Tutorials</a>
+</div>
 {% endblock %}
